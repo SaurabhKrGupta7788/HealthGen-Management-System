@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Path Visualization</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map { height: 100vh; }
+  </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+  // Start & End coordinates
+  const start = [23.732369, 92.716494];
+  const end   = [23.718835, 92.717611];
+
+  // Refined Path 2 (2.76 km)
+  const path2 = [
+    [23.73237, 92.71649],
+    [23.73263, 92.71691],
+    [23.73269, 92.71691],
+    [23.73314, 92.71697],
+    [23.73358, 92.71704],
+    [23.73403, 92.71710],
+    [23.73415, 92.71712],
+    [23.73425, 92.71719],
+    [23.73380, 92.71720],
+    [23.73335, 92.71720],
+    [23.73311, 92.71721],
+    [23.73266, 92.71723],
+    [23.73222, 92.71726],
+    [23.73177, 92.71729],
+    [23.73132, 92.71732],
+    [23.73087, 92.71735],
+    [23.73083, 92.71735],
+    [23.73077, 92.71734],
+    [23.73032, 92.71730],
+    [23.72987, 92.71726],
+    [23.72985, 92.71726],
+    [23.72942, 92.71738],
+    [23.72898, 92.71750],
+    [23.72867, 92.71759],
+    [23.72835, 92.71793],
+    [23.72802, 92.71827],
+    [23.72798, 92.71831],
+    [23.72755, 92.71843],
+    [23.72711, 92.71855],
+    [23.72668, 92.71868],
+    [23.72624, 92.71880],
+    [23.72612, 92.71884],
+    [23.72567, 92.71893],
+    [23.72557, 92.71896],
+    [23.72512, 92.71902],
+    [23.72468, 92.71909],
+    [23.72434, 92.71914],
+    [23.72442, 92.71866],
+    [23.72447, 92.71841],
+    [23.72440, 92.71838],
+    [23.72398, 92.71820],
+    [23.72357, 92.71802],
+    [23.72315, 92.71783],
+    [23.72273, 92.71765],
+    [23.72231, 92.71747],
+    [23.72190, 92.71728],
+    [23.72154, 92.71713],
+    [23.72116, 92.71687],
+    [23.72078, 92.71662],
+    [23.72059, 92.71649],
+    [23.72048, 92.71602],
+    [23.72019, 92.71565],
+    [23.71989, 92.71528],
+    [23.71976, 92.71512],
+    [23.71934, 92.71493],
+    [23.71917, 92.71485],
+    [23.71905, 92.71532],
+    [23.71893, 92.71579],
+    [23.71881, 92.71627],
+    [23.71869, 92.71674],
+    [23.71856, 92.71721],
+    [23.71855, 92.71726],
+    [23.71883, 92.71761]
+  ];
+
+  // Initialize Map
+  const map = L.map('map').setView(start, 15);
+
+  // Add OpenStreetMap tile layer
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  // Add Start & End markers
+  L.marker(start).addTo(map).bindPopup("Start");
+  L.marker(end).addTo(map).bindPopup("Destination");
+
+  // Draw Path 2 (blue line)
+  const polyline = L.polyline(path2, {color: "blue", weight: 5, opacity: 0.7}).addTo(map);
+  polyline.bindPopup("Path 2: 2.76 km");
+
+  // Add small markers for refined nodes
+  path2.forEach(node => {
+    L.circleMarker(node, {radius: 3, color: "blue"}).addTo(map);
+  });
+
+  // Fit map to path bounds
+  map.fitBounds(polyline.getBounds());
+
+  // Example user location (for deviation test later)
+  const userLocation = [23.7295, 92.7169];
+  L.marker(userLocation).addTo(map).bindPopup("User");
+</script>
+</body>
+</html>
